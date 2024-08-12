@@ -1,0 +1,26 @@
+// Precompute normalized field names and values to avoid multiple ToLower() calls
+var namedInsuredField = "namedinsured";
+var normalizedFieldRequests = sortFilterPageRequest.FilteredRequests
+    .Select(fr => fr.FilterOperands.FirstOrDefault(fo => fo.Field.Equals(namedInsuredField, StringComparison.OrdinalIgnoreCase))?.Value)
+    .FirstOrDefault();
+
+// Early exit if no relevant field request is found
+if (string.IsNullOrEmpty(normalizedFieldRequests))
+{
+    return new List<string>(); // Return an empty list if there's nothing to process
+}
+
+// Pre-normalize insureds in parallel and filter only those containing the search value
+var normalizedInsureds = insuredsPredicateFiltered
+    .AsParallel()
+    .Select(x => new 
+    {
+        Original = x.NamedInsured, 
+        Normalized = Utilities.NormalizeString(x.NamedInsured)
+    })
+    .Where(x => x.Normalized.Contains(searchValue))
+    .Select(x => x.Original)
+    .ToArray();
+
+// Perform fuzzy matching with FuzzySharp on the already filtered and normalized insureds
+var result = FuzzySharp.Process.ExtractAll(normalizedFieldRequests, normalizedInsureds).ToList();
