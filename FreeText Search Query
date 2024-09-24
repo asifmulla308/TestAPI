@@ -1,0 +1,45 @@
+CREATE PROCEDURE sp_DynamicSearch
+    @NamedInsured NVARCHAR(100) = NULL,
+    @Address NVARCHAR(100) = NULL,
+    @City NVARCHAR(100) = NULL
+AS
+BEGIN
+    DECLARE @SQL NVARCHAR(MAX)
+    
+    -- Base query
+    SET @SQL = 'SELECT DISTINCT FT_TBL.InsuredID, FT_TBL.NamedInsured, FT_TBL.Address1, FT_TBL.MailAddress1, FT_TBL.City, 
+                       COALESCE(KEY_TBL.RANK, 0) AS NamedInsuredRank, COALESCE(KEY_TBL_Address.RANK, 0) AS AddressRank
+                FROM INSURED AS FT_TBL'
+
+    -- Add joins based on conditions
+    IF @NamedInsured IS NOT NULL
+    BEGIN
+        SET @SQL = @SQL + ' JOIN FREETEXTTABLE(Insured, (NamedInsured), ''' + @NamedInsured + ''') AS KEY_TBL 
+                            ON FT_TBL.InsuredID = KEY_TBL.[KEY]'
+    END
+
+    IF @Address IS NOT NULL
+    BEGIN
+        SET @SQL = @SQL + ' JOIN FREETEXTTABLE(Insured, (Address), ''' + @Address + ''') AS KEY_TBL_Address 
+                            ON FT_TBL.InsuredID = KEY_TBL_Address.[KEY]'
+    END
+
+    -- Add WHERE clauses based on conditions
+    SET @SQL = @SQL + ' WHERE 1=1'
+
+    IF @Address IS NOT NULL
+    BEGIN
+        SET @SQL = @SQL + ' AND FT_TBL.Address1 = ''' + @Address + ''''
+    END
+
+    IF @City IS NOT NULL
+    BEGIN
+        SET @SQL = @SQL + ' AND FT_TBL.City = ''' + @City + ''''
+    END
+
+    -- Finalize query with ordering based on ranks
+    SET @SQL = @SQL + ' ORDER BY COALESCE(KEY_TBL.RANK, 0) DESC, COALESCE(KEY_TBL_Address.RANK, 0) DESC'
+
+    -- Execute the dynamically created SQL
+    EXEC sp_executesql @SQL
+END
