@@ -1,0 +1,34 @@
+(void)updatePeekDataArray
+{
+    NSNumberFormatter* numFormatter;
+    numFormatter = [[NSNumberFormatter alloc] init];
+    [numFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
+    int cyclePointDisplayIndex = kPeekRewardInfoIndex;
+
+    // Removed rewardsFormatter and simplified the logic
+    NSNumberFormatter* currencyFormatter = [[Theme currentTheme] currencyFormatter];
+    NSNumberFormatter* formatter = (self.isDollarAmount) ? currencyFormatter : numFormatter;
+
+    if ((self.balanceSummary.rewardsPoints && self.balanceSummary.rewardsBalanceApiEnabled) || 
+        (self.balanceSummary.totalRewardsPoints && self.balanceSummary.rewardsBalanceApiEnabled)) {
+
+        NSString *titleString = @"Reward points";
+        if (self.balanceSummary.rewardsDescription) {
+            titleString = self.balanceSummary.rewardsBalanceApiEnabled ? 
+                [NSString stringWithFormat:kTotalPointRewardsDescriptionLabel, self.balanceSummary.rewardsDescription] : 
+                [self.balanceSummary.rewardsDescription stripHTML];
+        }
+
+        NSString *pointsString = self.balanceSummary.rewardsBalanceApiEnabled ? 
+            [formatter stringFromNumber:self.balanceSummary.totalRewardsPoints] : 
+            [formatter stringFromNumber:self.balanceSummary.rewardsPoints];
+
+        [self.peekDataArray insertObject:@{
+            kPeekCellDataTitleKey: titleString,
+            kPeekCellDataValueKey: pointsString
+        } atIndex:cyclePointDisplayIndex];
+        
+        cyclePointDisplayIndex += 1;
+    }
+}
