@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- saved from url=(0080)../../assets/AzureBlue/selfAsserted.cshtml -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Sign In</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/css/assets.css" rel="stylesheet" type="text/css" />
+    <link href="https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/css/common1.css" rel="stylesheet" type="text/css" />
+    <link href="https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/css/unified.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img class="img-responsive" alt="Brand" src="https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/images/crclogo.png">
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container unified_container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img alt="Company Logo" class="companyLogo" src="https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/images/CRCCoverPageHeader.jpg">
+                    </div>
+                    <div id="api"></div>
+                    <div class="account-access" style="margin-top: 20px; justify-content: normal;">
+                        <span>Need online quoting access?</span>
+                        <a href="https://www.crcgroup.com/More/Account-Request">Request an account here</a>
+                    </div>
+                    <div class="account-access">
+                        <span>Need Account Statement Access?</span>
+                        <img alt="PDF Icon" src="https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/images/pdficon_small.gif">
+                        <a href="https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/assets/forms/Sign_Up_Form_AccountQuickViewV2.pdf" target="_blank" class="account-link underline">Fill out this form</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
