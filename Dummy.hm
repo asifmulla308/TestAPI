@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0080)../../assets/AzureBlue/selfAsserted.cshtml -->
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,9 +25,11 @@
             <div class="col-lg-6">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <img alt="Company Logo" class="companyLogo" src="https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/images/CRCCoverPageHeader.jpg">
+                        <img id="companyLogo" alt="Company Logo" class="companyLogo" src="">
                     </div>
-                    <div id="api"></div>
+                    <div id="api">
+		<button id="next" type="submit"></button>		
+	</div>
                     <div class="account-access" style="margin-top: 20px; justify-content: normal;">
                         <span>Need online quoting access?</span>
                         <a href="https://www.crcgroup.com/More/Account-Request">Request an account here</a>
@@ -42,5 +43,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var logo = document.getElementById("companyLogo");
+            var url = window.location.href;
+            if (url.includes("crc")) {
+                logo.src = "https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/images/CRCCoverPageHeader.jpg";
+            } else {
+                logo.src = "https://apps.crcgroup.com/b2ccustom/crcagencyb2ctemplate/images/StarwindCoverPageHeader.jpg";
+            }
+        });
+    </script>
 </body>
 </html>
